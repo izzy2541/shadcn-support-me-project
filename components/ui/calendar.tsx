@@ -6,10 +6,11 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react"
-import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
-
+import { DayButton, DayPicker, getDefaultClassNames, useDayPicker } from "react-day-picker"
+import { format } from "date-fns";
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger } from "./select";
 
 function Calendar({
   className,
@@ -75,7 +76,7 @@ function Calendar({
         ),
         dropdown: cn("absolute inset-0 opacity-0", defaultClassNames.dropdown),
         caption_label: cn(
-          "select-none font-medium",
+          "select-none font-medium hidden",
           captionLayout === "label"
             ? "text-sm"
             : "rounded-md pl-2 pr-1 flex items-center gap-1 text-sm h-8 [&>svg]:text-muted-foreground [&>svg]:size-3.5",
@@ -161,6 +162,37 @@ function Calendar({
               </div>
             </td>
           )
+        },
+        Dropdown: (dropdownProps) => {
+          const isMonthDropdown = dropdownProps.className?.includes("months");
+          //Declaring a variable called selectValues, which will hold an array of objects that look like this:
+          //{ value: "0", label: "Jan" }
+          //{ value: "1", label: "Feb" }
+          //initialise as an empty array
+          let selectValues: { value: string; label: string }[] = [];
+          if (isMonthDropdown) {
+            selectValues = Array.from({ length: 12 }, (_, i) => {
+              return {
+                value: i.toString(),
+                //returning the first 3 letter representation of each month using format function from date fns
+                //the three arguments are the year, the month and the first day of the month
+                //MMM formats as the abreviation
+                label: format(new Date(new Date().getFullYear(), i, 1), "MMM"),
+              };
+            });
+          }
+          return (
+            <Select>
+              <SelectTrigger>dropdown</SelectTrigger>
+              <SelectContent>
+                {selectValues.map(selectValue => (
+                  <SelectItem key={selectValue.value} value={selectValue.value}>
+                    {selectValue.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          );
         },
         ...components,
       }}

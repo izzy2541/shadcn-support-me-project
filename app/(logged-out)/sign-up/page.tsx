@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 
 const formSchema = z.object({
@@ -139,18 +140,21 @@ export default function SignupPage() {
                                 render={({ field }) => (
                                     <FormItem className="flex flex-col pt-2">
                                         <FormLabel>Date of Birth</FormLabel>
-                                        <Popover>
+                                        <Popover modal={false}>
                                             <PopoverTrigger asChild>
                                                 <FormControl>
                                                     <Button variant="outline" className="normal-case flex justify-between pr-1">
-                                                        <span>Pick a date</span>
-                                                        <CalendarIcon />
+                                                        {!!field.value ? (
+                                                            format(field.value, "PPP")
+                                                        ) : (
+                                                            <span>Pick a date</span>
+                                                        )}                                                        <CalendarIcon />
                                                     </Button>
                                                 </FormControl>
                                             </PopoverTrigger>
                                             <PopoverContent align="start" className="w-auto p-0">
                                                 <Calendar mode="single"
-                                                //single mode means we can only chose one date as oppposed to e.g. a range of dates
+                                                    //single mode means we can only chose one date as oppposed to e.g. a range of dates
                                                     defaultMonth={field.value}
                                                     selected={field.value}
                                                     onSelect={field.onChange}
@@ -158,10 +162,11 @@ export default function SignupPage() {
                                                     fixedWeeks
                                                     //Index of monday     
                                                     weekStartsOn={1}
-                                                    
-                                                    disabled={{ before: dobFromDate,
-                                                        after: new Date() }}
-
+                                                    captionLayout="dropdown"
+                                                    disabled={{
+                                                        before: dobFromDate,
+                                                        after: new Date()
+                                                    }}
                                                 />
                                             </PopoverContent>
                                         </Popover>

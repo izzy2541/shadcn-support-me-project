@@ -164,7 +164,9 @@ function Calendar({
           )
         },
         Dropdown: (dropdownProps) => {
+          const { fromYear, fromMonth, fromDate, toYear, toMonth, toDate} = useDayPicker();
           const isMonthDropdown = dropdownProps.className?.includes("months");
+          const isYearDropdown = dropdownProps.className?.includes("years");
           //Declaring a variable called selectValues, which will hold an array of objects that look like this:
           //{ value: "0", label: "Jan" }
           //{ value: "1", label: "Feb" }
@@ -178,8 +180,22 @@ function Calendar({
                 //the three arguments are the year, the month and the first day of the month
                 //MMM formats as the abreviation
                 label: format(new Date(new Date().getFullYear(), i, 1), "MMM"),
-              };
+              }
             });
+          } else if(isYearDropdown){
+            const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
+            const latestYear = toYear || toMonth?.getFullYear() || toDate?.getFullYear();
+
+            if(earliestYear && latestYear){
+              const yearsLength = latestYear - earliestYear + 1;
+
+              selectValues = Array.from({ length: yearsLength}, (_, i) => {
+                return{
+                  values: (earliestYear + i).toString(),
+                  label: (earliestYear + i).toString(),
+                };
+              });
+            }
           }
           return (
             <Select>

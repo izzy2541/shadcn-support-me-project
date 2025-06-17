@@ -163,45 +163,65 @@ function Calendar({
             </td>
           )
         },
+        //Months working. uncomment/revert to get to start of video that goes through years.
+        // Dropdown: (dropdownProps) => {
+        //   const isMonthDropdown = dropdownProps.className?.includes("months");
+        //   //Declaring a variable called selectValues, which will hold an array of objects that look like this:
+        //   //{ value: "0", label: "Jan" }
+        //   //{ value: "1", label: "Feb" }
+        //   //initialise as an empty array
+        //   let selectValues: { value: string; label: string }[] = [];
+        //   if (isMonthDropdown) {
+        //     selectValues = Array.from({ length: 12 }, (_, i) => {
+        //       return {
+        //         value: i.toString(),
+        //         //returning the first 3 letter representation of each month using format function from date fns
+        //         //the three arguments are the year, the month and the first day of the month
+        //         //MMM formats as the abreviation
+        //         label: format(new Date(new Date().getFullYear(), i, 1), "MMM"),
+        //       };
+        //     });
+        //   }
+        //   return (
+        //     <Select>
+        //       <SelectTrigger>dropdown</SelectTrigger>
+        //       <SelectContent>
+        //         {selectValues.map(selectValue => (
+        //           <SelectItem key={selectValue.value} value={selectValue.value}>
+        //             {selectValue.label}
+        //           </SelectItem>
+        //         ))}
+        //       </SelectContent>
+        //     </Select>
+        //   );
+        // },
         Dropdown: (dropdownProps) => {
-          const { fromYear, fromMonth, fromDate, toYear, toMonth, toDate} = useDayPicker();
           const isMonthDropdown = dropdownProps.className?.includes("months");
           const isYearDropdown = dropdownProps.className?.includes("years");
-          //Declaring a variable called selectValues, which will hold an array of objects that look like this:
-          //{ value: "0", label: "Jan" }
-          //{ value: "1", label: "Feb" }
-          //initialise as an empty array
+        
           let selectValues: { value: string; label: string }[] = [];
+        
           if (isMonthDropdown) {
-            selectValues = Array.from({ length: 12 }, (_, i) => {
-              return {
-                value: i.toString(),
-                //returning the first 3 letter representation of each month using format function from date fns
-                //the three arguments are the year, the month and the first day of the month
-                //MMM formats as the abreviation
-                label: format(new Date(new Date().getFullYear(), i, 1), "MMM"),
-              }
-            });
-          } else if(isYearDropdown){
-            const earliestYear = fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
-            const latestYear = toYear || toMonth?.getFullYear() || toDate?.getFullYear();
-
-            if(earliestYear && latestYear){
-              const yearsLength = latestYear - earliestYear + 1;
-
-              selectValues = Array.from({ length: yearsLength}, (_, i) => {
-                return{
-                  values: (earliestYear + i).toString(),
-                  label: (earliestYear + i).toString(),
-                };
-              });
-            }
+            selectValues = Array.from({ length: 12 }, (_, i) => ({
+              value: i.toString(),
+              label: format(new Date(0, i), "MMM"),
+            }));
+          } else if (isYearDropdown) {
+            const fromYear = 1990; // or whatever you want
+            const toYear = new Date().getFullYear() + 5;
+            const yearsLength = toYear - fromYear + 1;
+        
+            selectValues = Array.from({ length: yearsLength }, (_, i) => ({
+              value: (fromYear + i).toString(),
+              label: (fromYear + i).toString(),
+            }));
           }
+        
           return (
             <Select>
               <SelectTrigger>dropdown</SelectTrigger>
               <SelectContent>
-                {selectValues.map(selectValue => (
+                {selectValues.map((selectValue) => (
                   <SelectItem key={selectValue.value} value={selectValue.value}>
                     {selectValue.label}
                   </SelectItem>
@@ -209,7 +229,10 @@ function Calendar({
               </SelectContent>
             </Select>
           );
-        },
+        };
+        
+        
+        
         ...components,
       }}
       {...props}

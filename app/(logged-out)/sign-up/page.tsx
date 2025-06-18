@@ -39,10 +39,26 @@ const formSchema = z.object({
         );
         return date <= eighteenYearsAgo;
     }, "You must be at least 18 years old"),
+    //min number of characters, custom validation message
+    password: z
+        .string()
+        .min(8, "password must contain at least 8 characters")
+        .refine((password) => {
+            //must contain at least 1 special character and an uppercase letter
+            return /^(?=.*[!@#$%^&*])(?=.*[A-Z]).*$/.test(password);
+        }, "Password must contain at least 1 special character and an uppercase letter"),
+    passwordConfirm: z.string(),
     //superefine uses callback function that takes data and context as parameters. 
     //data will be all of the FormField values and context will be something we can ue to add
     //error messages to our forms, to specific form fields
 }).superRefine((data, ctx) => {
+    if (data.password !== data.passwordConfirm) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["passwordConfirm"],
+            message: "Passwords do not match",
+        })
+    }
     if (data.accountType === "company" && !data.companyName) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -134,6 +150,41 @@ export default function SignupPage() {
                                     </FormItem>
                                 )}
                             />
+
+                            {accountType === "company" &&
+                                <>
+                                    <FormField
+                                        control={form.control}
+                                        name="companyName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Company name</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Company name" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="numberOfEmployees"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Employees</FormLabel>
+                                                <FormControl>
+                                                    <Input type="number"
+                                                        min={0}
+                                                        placeholder="Employees"
+                                                        {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                </>
+                            }
                             <FormField
                                 control={form.control}
                                 name="dob"
@@ -178,39 +229,36 @@ export default function SignupPage() {
                                     </FormItem>
                                 )}
                             />
-                            {accountType === "company" &&
-                                <>
-                                    <FormField
-                                        control={form.control}
-                                        name="companyName"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Company name</FormLabel>
-                                                <FormControl>
-                                                    <Input placeholder="Company name" {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="numberOfEmployees"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Employees</FormLabel>
-                                                <FormControl>
-                                                    <Input type="number"
-                                                        min={0}
-                                                        placeholder="Employees"
-                                                        {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </>
-                            }
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="••••••••"
+                                                type="password"
+                                                {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                                        <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="••••••••"
+                                                type="password"
+                                                {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <Button type="submit">Sign up</Button>
                         </form>
                     </Form>

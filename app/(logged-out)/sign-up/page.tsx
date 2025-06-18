@@ -154,7 +154,9 @@ export default function SignupPage() {
                                             </PopoverTrigger>
                                             <PopoverContent align="start" className="w-auto p-0">
                                                 <Calendar mode="single"
-                                                    //single mode means we can only chose one date as oppposed to e.g. a range of dates
+                                                    //single mode means we can only chose one date as opposed to e.g. a range of dates
+                                                    //default month prop here ensures that if we open and close the calendar pop up, the date we previously
+                                                    //selected stays selected.
                                                     defaultMonth={field.value}
                                                     selected={field.value}
                                                     onSelect={field.onChange}
@@ -163,6 +165,8 @@ export default function SignupPage() {
                                                     //Index of monday     
                                                     weekStartsOn={1}
                                                     captionLayout="dropdown"
+                                                    //the first available date in the calendar
+                                                    startMonth={dobFromDate}
                                                     disabled={{
                                                         before: dobFromDate,
                                                         after: new Date()

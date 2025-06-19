@@ -8,6 +8,7 @@ import { PersonStandingIcon } from "lucide-react";
 import * as z from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PasswordInput } from "@/components/ui/password-input";
 
 
 const formSchema = z.object({
@@ -70,8 +71,7 @@ export default function LoginPage() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input type="password" placeholder="Password" 
-                                           
+                                            <PasswordInput placeholder="••••••••" 
                                             {...field} />
                                         </FormControl>
                                         <FormMessage />

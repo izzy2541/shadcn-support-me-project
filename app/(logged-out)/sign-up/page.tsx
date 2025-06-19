@@ -12,78 +12,79 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { PasswordInput } from "@/components/ui/password-input";
 
 const formSchema = z
-  .object({
-    // ensure our email gets validated as a string, and must be a valid email
-    //- this validation is taken care of by zod.
-    //now it knows how to validate all the form fields based on this resolver
-    email: z.string().email(),
-    accountType: z.enum(["personal", "company"]),
-    companyName: z.string().optional(),
-          //all fields are strings by default. to change this, and to allow the field to accept 
-    //a different data type, we must use coerce
-    numberOfEmployees: z.coerce.number().optional(),
-    acceptTerms: z
-      .boolean({
-        required_error: "You must accept the terms and conditions",
-      })
-      //     //we can use refine as opposed to superRefine if we just want to validate a single form field
-    //and we dont need a=other form fields as part of that validation.
-    //takes callback function as first parameter, which returns a boolean.
-    //if it returns true - this means to display the validation message. 
-    //passes users answer as parameter
-      .refine((checked) => checked, "You must accept the terms and conditions"),
-    dob: z.date().refine((date) => {
-      const today = new Date();
-      const eighteedYearsAgo = new Date(
-        today.getFullYear() - 18,
-        today.getMonth(),
-        today.getDate()
-      );
-      return date <= eighteedYearsAgo;
-    }, "You must be at least 18 years old"),
-    password: z
-      .string()
-      .min(8, "Password must contain at least 8 characters")
-      .refine((password) => {
-        // must contain at least 1 special character and 1 uppercase character
-        return /^(?=.*[!@#$%^&*])(?=.*[A-Z]).*$/.test(password);
-      }, "Password must contain at least 1 special character and 1 uppercase letter"),
-    passwordConfirm: z.string(),
-  })
+    .object({
+        // ensure our email gets validated as a string, and must be a valid email
+        //- this validation is taken care of by zod.
+        //now it knows how to validate all the form fields based on this resolver
+        email: z.string().email(),
+        accountType: z.enum(["personal", "company"]),
+        companyName: z.string().optional(),
+        //all fields are strings by default. to change this, and to allow the field to accept 
+        //a different data type, we must use coerce
+        numberOfEmployees: z.coerce.number().optional(),
+        acceptTerms: z
+            .boolean({
+                required_error: "You must accept the terms and conditions",
+            })
+            //     //we can use refine as opposed to superRefine if we just want to validate a single form field
+            //and we dont need a=other form fields as part of that validation.
+            //takes callback function as first parameter, which returns a boolean.
+            //if it returns true - this means to display the validation message. 
+            //passes users answer as parameter
+            .refine((checked) => checked, "You must accept the terms and conditions"),
+        dob: z.date().refine((date) => {
+            const today = new Date();
+            const eighteedYearsAgo = new Date(
+                today.getFullYear() - 18,
+                today.getMonth(),
+                today.getDate()
+            );
+            return date <= eighteedYearsAgo;
+        }, "You must be at least 18 years old"),
+        password: z
+            .string()
+            .min(8, "Password must contain at least 8 characters")
+            .refine((password) => {
+                // must contain at least 1 special character and 1 uppercase character
+                return /^(?=.*[!@#$%^&*])(?=.*[A-Z]).*$/.test(password);
+            }, "Password must contain at least 1 special character and 1 uppercase letter"),
+        passwordConfirm: z.string(),
+    })
 
     //superefine uses callback function that takes data and context as parameters. 
     //data will be all of the FormField values and context will be something we can ue to add
     //error messages to our forms, to specific form fields
-  .superRefine((data, ctx) => {
-    if (data.password !== data.passwordConfirm) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["passwordConfirm"],
-        message: "Passwords do not match",
-      });
-    }
+    .superRefine((data, ctx) => {
+        if (data.password !== data.passwordConfirm) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["passwordConfirm"],
+                message: "Passwords do not match",
+            });
+        }
 
-    if (data.accountType === "company" && !data.companyName) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["companyName"],
-        message: "Company name is required",
-      });
-    }
+        if (data.accountType === "company" && !data.companyName) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["companyName"],
+                message: "Company name is required",
+            });
+        }
 
-    if (
-      data.accountType === "company" &&
-      (!data.numberOfEmployees || data.numberOfEmployees < 1)
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["numberOfEmployees"],
-        message: "Number of employees is required",
-      });
-    }
-  });
+        if (
+            data.accountType === "company" &&
+            (!data.numberOfEmployees || data.numberOfEmployees < 1)
+        ) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["numberOfEmployees"],
+                message: "Number of employees is required",
+            });
+        }
+    });
 
 export default function SignupPage() {
     const form = useForm<z.infer<typeof formSchema>>({
@@ -91,6 +92,9 @@ export default function SignupPage() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
+            password: "",
+            passwordConfirm: "",
+            companyName: "",
         }
     });
 
@@ -243,8 +247,7 @@ export default function SignupPage() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="••••••••"
-                                                type="password"
+                                            <PasswordInput placeholder="••••••••"
                                                 {...field} />
                                         </FormControl>
                                         <FormMessage />
@@ -258,8 +261,7 @@ export default function SignupPage() {
                                     <FormItem>
                                         <FormLabel>Confirm password</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="••••••••"
-                                                type="password"
+                                            <PasswordInput placeholder="••••••••"
                                                 {...field} />
                                         </FormControl>
                                         <FormMessage />

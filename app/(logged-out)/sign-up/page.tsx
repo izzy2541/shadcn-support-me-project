@@ -13,6 +13,9 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
+
 
 const formSchema = z
     .object({
@@ -29,7 +32,7 @@ const formSchema = z
             .boolean({
                 required_error: "You must accept the terms and conditions",
             })
-            //     //we can use refine as opposed to superRefine if we just want to validate a single form field
+            //we can use refine as opposed to superRefine if we just want to validate a single form field
             //and we dont need a=other form fields as part of that validation.
             //takes callback function as first parameter, which returns a boolean.
             //if it returns true - this means to display the validation message. 
@@ -87,8 +90,9 @@ const formSchema = z
     });
 
 export default function SignupPage() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
-        // resiolver links zod with react, as the 2 of them arent usually linked/related.
+        // resolver links zod with react, as the 2 of them arent usually linked/related.
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
@@ -98,8 +102,9 @@ export default function SignupPage() {
         }
     });
 
-    const handleSubmit = () => {
-        console.log("login validation passed")
+    const handleSubmit = (data: z.infer<typeof formSchema>) => {
+        console.log("login validation passed: ", data);
+        router.push("/dashboard");
     }
 
     //with watch, anytime the form changes, it will be reflected in the const.
@@ -187,7 +192,9 @@ export default function SignupPage() {
                                                     <Input type="number"
                                                         min={0}
                                                         placeholder="Employees"
-                                                        {...field} />
+                                                        {...field} 
+                                                        //sets default value
+                                                        value={field.value ?? ""}/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -268,6 +275,29 @@ export default function SignupPage() {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="acceptTerms"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className="flex gap-2 items-center">
+                                            <FormControl>
+                                                <Checkbox
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange} />
+                                            </FormControl>
+                                            <FormLabel>I accept the terms and conditions</FormLabel>
+
+                                        </div>
+                                        <FormDescription>
+                                            By signing up you agree to our <Link href="/terms" className="text-primary hover:underline">terms and conditions</Link>
+                                        </FormDescription>
+
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
                             <Button type="submit">Sign up</Button>
                         </form>
                     </Form>

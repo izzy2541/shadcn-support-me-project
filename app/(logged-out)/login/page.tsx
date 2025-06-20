@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useRouter } from "next/navigation";
 
 
 const formSchema = z.object({
@@ -20,6 +21,7 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         // resiolver links zod with react, as the 2 of them arent usually linked/related.
         resolver: zodResolver(formSchema),
@@ -29,8 +31,9 @@ export default function LoginPage() {
         }
     });
 
-    const handleSubmit = () => {
-        console.log("login validation passed")
+    const handleSubmit = (data: z.infer<typeof formSchema>) => {
+        console.log("login validation passed: ", data);
+        router.push("/dashboard");
     }
 
     return (

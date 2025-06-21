@@ -15,7 +15,7 @@ export default function EmployeesStats() {
                         <UserIcon />
                         <div className="text-5xl font-bold">100</div>
                     </div>
-                    <Button size="sm" asChild>
+                    <Button size="xs" asChild>
                         <Link href="/dashboard/employees">View all</Link>
                     </Button>
                 </CardContent>

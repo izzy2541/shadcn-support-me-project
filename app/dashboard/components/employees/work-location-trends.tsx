@@ -66,10 +66,22 @@ const data = [
   
 export default function WorkLocationTrends(){
     return <ResponsiveContainer height={350} width="100%">
-        <BarChart data={data}>
+      {/* using [&] gives any descendants of the bar chart with this classname */}
+        <BarChart data={data} className='[&_.recharts-tooltip-cursor]:fill-zinc-200 dark:[&_.recharts-tooltip-cursor]:fill-zinc-800'>
             <XAxis dataKey="name" stroke="#888888" fontSize={12}/>
             <YAxis stroke="#888888" fontSize={12}/>
-            <Tooltip wrapperClassName="dark:!bg-black rounded-md dark:!border-border"/>
+            <Tooltip 
+            separator=': '
+            //value here refers to the value of the data item, name is either office or wfh
+            formatter={(value, name) => {
+              if(name === "wfh"){
+                return [value, "Work from home"];
+              } else if (name === "office"){
+                return [value, "Work from office"]
+              }
+            }}
+            wrapperClassName="!text-sm dark:!bg-black rounded-md dark:!border-border" 
+            />
             <Legend 
             iconType="circle"
             formatter={(value) => {

@@ -1,15 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertTriangleIcon, BadgeCheckIcon, ListCheckIcon, StarIcon, UserCheck2Icon, UserIcon, UserRoundXIcon, UsersIcon } from "lucide-react";
+import { ListCheckIcon, PieChartIcon, StarIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import cm from "@/public/images/cm.jpg"
 import tf from "@/public/images/tf.jpg"
 import rl from "@/public/images/rl.jpg"
-
 import Image from "next/image";
 import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipContent } from "@radix-ui/react-tooltip";
+import TeamsDistributionChart from "./team-distribution-chart";
 
 const teamLeaders = [
     {
@@ -71,9 +71,9 @@ export default function TeamsStats() {
                         </Button>
                     </CardContent>
                 </Card>
-                <Card className="gap-2">
+                <Card className="pb-4">
                     <CardHeader>
-                        <CardTitle className="text-base flex justify-between">
+                        <CardTitle className="text-base flex justify-between items-center">
                             <span>Team leaders</span>
                             <StarIcon className="text-yellow-500"/>
                         </CardTitle>
@@ -103,9 +103,12 @@ export default function TeamsStats() {
                 </Card>
                 <Card className="gap-2 flex flex-col">
                     <CardHeader>
-                        <CardTitle className="text-base">Team distribution</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex gap-2 items-center">
+                    <CardTitle className="text-base flex justify-between items-center">
+                            <span>Team distribution</span>
+                            <PieChartIcon />
+                        </CardTitle>                    </CardHeader>
+                    <CardContent>
+                        <TeamsDistributionChart/>
                     </CardContent>
 
                 </Card>

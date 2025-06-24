@@ -16,12 +16,12 @@ export default function EmployeesStats() {
             <div className="grid lg:grid-cols-3 gap-4">
                 <Card className="gap-2">
                     <CardHeader>
-                        <CardTitle className="text-base">{totalEmployees}</CardTitle>
+                        <CardTitle className="text-base">Total employees</CardTitle>
                     </CardHeader>
                     <CardContent className="flex justify-between items-center">
                         <div className="flex gap-2">
                             <UserIcon />
-                            <div className="text-5xl font-bold">100</div>
+                            <div className="text-5xl font-bold">{totalEmployees}</div>
                         </div>
                         <Button size="xs" asChild>
                             <Link href="/dashboard/employees">View all</Link>

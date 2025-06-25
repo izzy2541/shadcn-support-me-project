@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import TeamsDistributionChart from "./team-distribution-chart";
+import SupportTicketsResolved from "./support-tickets-resolved";
 
 const teamLeaders = [
     {
@@ -108,7 +109,7 @@ export default function TeamsStats() {
                             <PieChartIcon />
                         </CardTitle>                    
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pb-0">
                         <TeamsDistributionChart />
                     </CardContent>
                 </Card>
@@ -117,7 +118,7 @@ export default function TeamsStats() {
                 <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
                         <ListCheckIcon />
-                        <span>Support tickets resolved</span>
+                        <SupportTicketsResolved />
                     </CardTitle>
                 </CardHeader>
                 <CardContent>

@@ -13,46 +13,46 @@ import TeamsDistributionChart from "./team-distribution-chart";
 
 const teamLeaders = [
     {
-      firstName: "Colin",
-      lastName: "Murray",
-      avatar: cm,
+        firstName: "Colin",
+        lastName: "Murray",
+        avatar: cm,
     },
     {
-      firstName: "Tom",
-      lastName: "Phillips",
+        firstName: "Tom",
+        lastName: "Phillips",
     },
     {
-      firstName: "Liam",
-      lastName: "Fuentes",
+        firstName: "Liam",
+        lastName: "Fuentes",
     },
     {
-      firstName: "Tina",
-      lastName: "Fey",
-      avatar: tf,
+        firstName: "Tina",
+        lastName: "Fey",
+        avatar: tf,
     },
     {
-      firstName: "Katie",
-      lastName: "Johnson",
+        firstName: "Katie",
+        lastName: "Johnson",
     },
     {
-      firstName: "Tina",
-      lastName: "Jones",
+        firstName: "Tina",
+        lastName: "Jones",
     },
     {
-      firstName: "Amy",
-      lastName: "Adams",
+        firstName: "Amy",
+        lastName: "Adams",
     },
     {
-      firstName: "Ryan",
-      lastName: "Lopez",
-      avatar: rl,
+        firstName: "Ryan",
+        lastName: "Lopez",
+        avatar: rl,
     },
     {
-      firstName: "Jenny",
-      lastName: "Jones",
+        firstName: "Jenny",
+        lastName: "Jones",
     },
-  ];
-  
+];
+
 export default function TeamsStats() {
     return (
         <>
@@ -75,42 +75,42 @@ export default function TeamsStats() {
                     <CardHeader>
                         <CardTitle className="text-base flex justify-between items-center">
                             <span>Team leaders</span>
-                            <StarIcon className="text-yellow-500"/>
+                            <StarIcon className="text-yellow-500" />
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-wrap gap-2">
                         {teamLeaders.map(teamLeader => (
                             <TooltipProvider key={`${teamLeader.firstName}${teamLeader.lastName}`}>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Avatar>
-                                                {!!teamLeader.avatar && 
-                                                <Image src={teamLeader.avatar} alt={`${teamLeader.firstName} ${teamLeader.lastName} avatar`}/>
-                                                }
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Avatar>
+                                            {!!teamLeader.avatar &&
+                                                <Image src={teamLeader.avatar} alt={`${teamLeader.firstName} ${teamLeader.lastName} avatar`} />
+                                            }
                                             <AvatarFallback>
-                                            {teamLeader.firstName[0]}
-                                            {teamLeader.lastName[0]}
+                                                {teamLeader.firstName[0]}
+                                                {teamLeader.lastName[0]}
                                             </AvatarFallback>
-                                            </Avatar>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                        </Avatar>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
                                         {teamLeader.firstName} {teamLeader.lastName}
-                                        </TooltipContent>
-                                    </Tooltip>
-                            </TooltipProvider>    
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         ))}
                     </CardContent>
                 </Card>
                 <Card className="gap-2 flex flex-col">
                     <CardHeader>
-                    <CardTitle className="text-base flex justify-between items-center">
+                        <CardTitle className="text-base flex justify-between items-center">
                             <span>Team distribution</span>
                             <PieChartIcon />
-                        </CardTitle>                    </CardHeader>
+                        </CardTitle>                    
+                    </CardHeader>
                     <CardContent>
-                        <TeamsDistributionChart/>
+                        <TeamsDistributionChart />
                     </CardContent>
-
                 </Card>
             </div>
             <Card className="my-4">

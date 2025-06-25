@@ -80,6 +80,7 @@ export default function WorkLocationTrends(){
                 return [value, "Work from office"]
               }
             }}
+            labelClassName='font-bold'
             wrapperClassName="!text-sm dark:!bg-black rounded-md dark:!border-border" 
             />
             <Legend 

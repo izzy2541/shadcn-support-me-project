@@ -59,7 +59,7 @@ export default function TeamsStats() {
         <>
             <div className="grid lg:grid-cols-3 gap-4">
                 <Card className="gap-2">
-                    <CardHeader>
+                    <CardHeader >
                         <CardTitle className="text-base">Total teams</CardTitle>
                     </CardHeader>
                     <CardContent className="flex justify-between items-center">

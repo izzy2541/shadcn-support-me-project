@@ -1,5 +1,5 @@
 "use client";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import MainMenu from "./components/main-menu";
 import MenuTitle from "./components/menu-title";
 import { MenuIcon } from "lucide-react";
@@ -12,12 +12,15 @@ export default function DashboardLayout({
 }) {
     const isDesktop = useMediaQuery("(min-width:768px");
     return (
-        <div className="grid md:grid-cols-[250px_1fr] h-screen">
+        <div className="md:grid md:grid-cols-[250px_1fr] h-screen">
             <MainMenu className="hidden md:flex" />
-            {!isDesktop && (
+            {isDesktop ? (
+                <MainMenu />
+            ) : (
                 <div className="p-4 flex justify-between md:hidden sticky top-0 left-0 bg-background border-b border-border">
                     <MenuTitle />
-                    <Drawer>
+                    <Drawer direction="right">
+                        <DrawerTitle></DrawerTitle>
                         <DrawerTrigger>
                             <MenuIcon />
                         </DrawerTrigger>

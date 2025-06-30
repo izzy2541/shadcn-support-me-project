@@ -4,6 +4,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -15,6 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from "./button"
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -29,10 +32,16 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+        pagination: {
+            pageSize: 5
+        }
+    }
   })
 
   return (
-    <div className="rounded-md border">
+    <div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -75,6 +84,58 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+    {/* <div className="flex items-center justify-end space-x-2 py-4 pt-10">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div> */}
+      <div className="flex items-center justify-end space-x-2 py-4 pt-10">
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() => table.setPageIndex(0)}
+    disabled={!table.getCanPreviousPage()}
+  >
+    <ChevronFirst className="h-4 w-4" />
+  </Button>
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() => table.previousPage()}
+    disabled={!table.getCanPreviousPage()}
+  >
+    <ChevronLeft className="h-4 w-4" />
+  </Button>
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() => table.nextPage()}
+    disabled={!table.getCanNextPage()}
+  >
+    <ChevronRight className="h-4 w-4" />
+  </Button>
+  <Button
+    variant="outline"
+    size="icon"
+    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+    disabled={!table.getCanNextPage()}
+  >
+    <ChevronLast className="h-4 w-4" />
+  </Button>
+</div>
     </div>
   )
 }

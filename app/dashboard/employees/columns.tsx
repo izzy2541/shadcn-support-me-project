@@ -1,6 +1,7 @@
 "use client"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image";
 
@@ -49,5 +50,9 @@ export const columns: ColumnDef<Employee>[] = [
     {
         accessorKey: "isTeamLeader",
         header: "",
+        cell: ({ row }) => {
+            const isTeamLeader: boolean = row.getValue("isTeamLeader");
+            return isTeamLeader ? <Badge variant="success">Team leader</Badge> : null;
+        }
     },
 ]

@@ -37,7 +37,6 @@ export default function DashboardLayout({
             <div className="overflow-auto py-2 px-4">
                 <div className="pb-4">
                     <h1>Welcome back, Isabel!</h1>
-                   
                 </div>
                 {children}
             </div>

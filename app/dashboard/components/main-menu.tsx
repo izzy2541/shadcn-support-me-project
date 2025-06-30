@@ -1,6 +1,6 @@
 import MenuTitle from "./menu-title";
 import MenuItem from "./menu-item";
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { LightDarkToggle } from "@/components/ui/light-dark-toggle";
 import { cn } from "@/lib/utils"
@@ -19,14 +19,16 @@ export default function MainMenu({className}: {className?: string}) {
                 <MenuItem href="/dashboard/settings">Settings</MenuItem>
             </div>
             <footer className="flex gap-2 items-center">
-                <Avatar>
-                    <AvatarFallback className="bg-pink-300 dark:bg-pink-800">ID</AvatarFallback>
-                </Avatar>
-                <Link href="/" className="hover:underline">
-                    Logout
-                </Link>
-                <LightDarkToggle/>
-            </footer>
+        <Avatar>
+          <AvatarFallback className="bg-pink-300 dark:bg-pink-800 rounded-full size-full">
+            ID
+          </AvatarFallback>
+        </Avatar>
+        <Link href="/" className="hover:underline">
+          Logout
+        </Link>
+        <LightDarkToggle className="ml-auto" />
+      </footer>
         </nav>
    )
 }

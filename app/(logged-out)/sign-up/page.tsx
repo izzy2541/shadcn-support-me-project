@@ -102,10 +102,22 @@ export default function SignupPage() {
         }
     });
 
+    // const handleSubmit = (data: z.infer<typeof formSchema>) => {
+    //     console.log("login validation passed: ", data);
+    //     router.push("/dashboard");
+    // }
+
     const handleSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log("login validation passed: ", data);
-        router.push("/dashboard");
-    }
+    console.log("login validation passed: ", data);
+
+    // For example, let's store the first part of the email as a "name" placeholder
+    // Or you could add a 'firstName' field to your form
+    const firstName = data.email.split("@")[0]; // simple example
+    localStorage.setItem("userName", firstName);
+
+    router.push("/dashboard");
+}
+
 
     //with watch, anytime the form changes, it will be reflected in the const.
     const accountType = form.watch("accountType");

@@ -53,6 +53,7 @@ export const columns: ColumnDef<Employee>[] = [
         cell: ({ row }) => {
             const isTeamLeader: boolean = row.getValue("isTeamLeader");
             return isTeamLeader ? <Badge variant="success" className="text-white">Team leader</Badge> : null;
+
         }
     },
 ]

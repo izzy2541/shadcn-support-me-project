@@ -44,9 +44,18 @@
 "use client"
 
 import { LightDarkToggle } from "@/components/ui/light-dark-toggle";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+
 
 export default function SettingsPage() {
+  const router = useRouter()
+
+  const handleDeleteAndLogout = () => {
+    // Here you could also clear local storage / tokens if needed
+    router.push("/") // redirects to homepage
+  }
+
   return (
     <div className="p-8 space-y-8">
       <h2 className="text-2xl font-bold">Settings</h2>
@@ -78,23 +87,12 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Personalization */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Personalization</h3>
-        <div className="flex flex-col space-y-2 w-48">
-          <Button variant="outline" size="sm" className="cursor-pointer">
-            Change Avatar
-          </Button>
-          <Button variant="outline" size="sm" className="cursor-pointer">
-            Reset Layout
-          </Button>
-        </div>
-      </div>
-
       {/* Danger Zone */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-2 text-red-600">Danger Zone</h3>
-        <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer">
+        <button 
+        onClick={handleDeleteAndLogout}
+         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer">
           Delete Account & logout
         </button>
       </div>

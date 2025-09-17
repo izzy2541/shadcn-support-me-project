@@ -25,10 +25,10 @@ export function LightDarkToggle({
                         <MoonIcon className="hidden dark:block"/>
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>
+                {/* <TooltipContent>
                     <span className="hidden dark:inline">Enable light mode</span>
                     <span className="inline dark:hidden">Enable dark mode</span>
-                </TooltipContent>
+                </TooltipContent> */}
             </Tooltip>
         </TooltipProvider>
     )

@@ -162,7 +162,7 @@ export default function TeamsPage() {
               </p>
               <p className="text-sm">{team.members.length} members</p>
             </CardContent>
-            <CardFooter>
+            {/* <CardFooter>
               <Button
                 variant="outline"
                 size="sm"
@@ -171,7 +171,18 @@ export default function TeamsPage() {
               >
                 View Team
               </Button>
-            </CardFooter>
+            </CardFooter> */}
+            <CardFooter>
+  <Button
+    variant="outline"
+    size="sm"
+    className="w-full cursor-pointer"
+    onClick={() => setOpenTeam(team.name)}
+  >
+    View Projects
+  </Button>
+</CardFooter>
+
           </Card>
         ))}
       </div>
@@ -181,11 +192,17 @@ export default function TeamsPage() {
         <DialogContent className="max-w-md">
           {openTeam && (
             <>
-              <DialogHeader>
+              {/* <DialogHeader>
                 <DialogTitle className="capitalize">
                   {openTeam} Team Overview
                 </DialogTitle>
-              </DialogHeader>
+              </DialogHeader> */}
+              <DialogHeader>
+  <DialogTitle className="capitalize">
+    {openTeam} Team – Project Overview
+  </DialogTitle>
+</DialogHeader>
+
               <div className="flex flex-col items-center">
                 <PieChart width={300} height={250}>
                   <Pie

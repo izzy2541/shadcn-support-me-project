@@ -2,7 +2,7 @@ import MenuTitle from "./menu-title";
 import MenuItem from "./menu-item";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
-import { LightDarkToggle } from "@/components/ui/light-dark-toggle";
+// import { LightDarkToggle } from "@/components/ui/light-dark-toggle";
 import { cn } from "@/lib/utils"
 
 export default function MainMenu({className}: {className?: string}) {
@@ -27,7 +27,7 @@ export default function MainMenu({className}: {className?: string}) {
         <Link href="/" className="hover:underline">
           Logout
         </Link>
-        <LightDarkToggle className="ml-auto" />
+        {/* <LightDarkToggle className="ml-auto" /> */}
       </footer>
         </nav>
    )

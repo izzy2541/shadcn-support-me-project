@@ -1,6 +1,6 @@
 "use client"
 import { Button } from  "./button";
-import { TooltipContent } from "@radix-ui/react-tooltip";
+// import { TooltipContent } from "@radix-ui/react-tooltip";
 import { Tooltip, TooltipProvider, TooltipTrigger } from "./tooltip";
 import { SunIcon, MoonIcon } from "lucide-react";
 import { useTheme } from  "next-themes";

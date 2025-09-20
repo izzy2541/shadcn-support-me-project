@@ -12,7 +12,7 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 export type PasswordInputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (

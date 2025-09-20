@@ -8,7 +8,7 @@ export default function MenuTitle(){
 
     const redirectToHome = () => {
       // Here you could also clear local storage / tokens if needed
-      router.push("/") // redirects to homepage
+      router.push("/dashboard") // redirects to homepage
     }
 
     return(

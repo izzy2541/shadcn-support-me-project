@@ -1,7 +1,7 @@
 import { setTimeout } from "timers/promises";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
-import { type columns } from "./columns";
+import { columns } from "./columns";
 import { employees } from "@/app/data/employees"
 
 

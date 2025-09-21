@@ -49,8 +49,15 @@ const teamInfo = {
 
 const COLORS = ["#4ade80", "#60a5fa", "#facc15"] // green, blue, yellow
 
+// ---------------- FIX START ----------------
+type Team = {
+  name: string
+  leader?: typeof employees[number] // one employee from the array
+  members: typeof employees         // whole employees array type
+}
+
 // Group employees by team
-const teams = Object.values(
+const teams: Team[] = Object.values(
   employees.reduce((acc, emp) => {
     if (!acc[emp.teamName]) {
       acc[emp.teamName] = {
@@ -63,8 +70,9 @@ const teams = Object.values(
     }
     acc[emp.teamName].members.push(emp)
     return acc
-  }, {} as Record<string, { name: string; leader?: typeof employees[0]; members: typeof employees }>)
+  }, {} as Record<string, Team>)
 )
+// ---------------- FIX END ----------------
 
 export default function TeamsPage() {
   const [openTeam, setOpenTeam] = useState<string | null>(null)
@@ -111,7 +119,6 @@ export default function TeamsPage() {
                 View Projects
               </Button>
             </CardFooter>
-
           </Card>
         ))}
       </div>

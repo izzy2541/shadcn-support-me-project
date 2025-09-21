@@ -1,3 +1,5 @@
+import { Employee } from "@/app/types/employee"
+
 export const employees: Employee[] = [
     {
         id: 1,
